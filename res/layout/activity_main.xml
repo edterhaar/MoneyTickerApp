@@ -1,0 +1,84 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <EditText
+        android:id="@+id/SaleryField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="18dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:ems="10"
+        android:inputType="number"
+        android:text="@string/Salary_Amount" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/start_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/stop_button"
+        android:layout_alignParentLeft="true"
+        android:minHeight="60dp"
+        android:onClick="startCounter"
+        android:text="@string/Start_Button" />
+
+    <Button
+        android:id="@+id/stop_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:minHeight="60dp"
+        android:onClick="stopCounter"
+        android:text="@string/Stop_Button" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/SaleryField"
+        android:layout_alignBottom="@+id/SaleryField"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="26dp"
+        android:text="@string/Salary_Text" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/start_button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/SaleryField"
+        android:columnCount="1" >
+
+        <TextView
+            android:id="@+id/CounterText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center"
+            android:layout_row="0"
+            android:text="@string/Count"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="70sp" />
+
+    </GridLayout>
+
+</RelativeLayout>
