@@ -8,4 +8,5 @@
 	<string name="Count">£0.00</string>
 	<string name="Start_Button">Start</string>
 	<string name="Stop_Button">Stop</string>
+	<color name="Gray">#FF778899</color>
 </resources>

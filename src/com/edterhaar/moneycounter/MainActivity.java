@@ -17,7 +17,8 @@ public class MainActivity extends Activity
 {
 	int time = 0;
 	Timer timer = null;
-	double secondRate;
+	double secondRateTaxed;
+	double secondRateGross;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +57,11 @@ public class MainActivity extends Activity
 			time=0;
 		
 			EditText editText = (EditText)findViewById(R.id.SaleryField);
-			int salary = Integer.parseInt(editText.getText().toString());
-			secondRate = (((double)salary/52)/37)/3600;
+			double salary = Double.parseDouble(editText.getText().toString());
+			double taxedRate = TaxedRate(salary);
+			
+			secondRateTaxed = (((double)taxedRate/52)/37)/3600;
+			secondRateGross = (((double)salary/52)/37)/3600;
 		
 			timer.schedule(new TimerTask()
 			{
@@ -91,13 +95,64 @@ public class MainActivity extends Activity
 		@Override
 		public void run() 
 		{
+			TextView taxCounterText = (TextView)findViewById(R.id.TaxCounter);
+			TextView grossCounterText = (TextView)findViewById(R.id.GrossCounter);
+			
 			time ++;
-			double amount = time*secondRate/10;
-			TextView counterText = (TextView)findViewById(R.id.CounterText);
+			double amountGross = time*secondRateGross/10;
+			double amountTax = time*secondRateTaxed/10;
+			
 			NumberFormat fmt = NumberFormat.getCurrencyInstance();
-			counterText.setText(fmt.format(amount));
+			taxCounterText.setText(fmt.format(amountTax));
+			grossCounterText.setText(fmt.format(amountGross));
 		}
 	};
 	
-
+	private double TaxedRate(double salary)
+	{
+		double incomeTax = 0;
+		double allowance = 8105;
+		double nationalInscurance = 0;
+		double minusAllowance = salary - allowance;
+				
+		if( minusAllowance > 0)
+		{
+			if(minusAllowance > 34370)
+			{
+				if(minusAllowance > 150000)
+				{
+					incomeTax = (34370 * 0.2) + (150000 * 0.40) + ((minusAllowance - 150000) * 0.50);
+				}
+				else
+				{
+					incomeTax = (34370 * 0.2) + ((minusAllowance - 34370) * 0.40);					
+				}
+			}
+			else
+			{
+				incomeTax = minusAllowance * 0.20;
+			}
+		}
+		
+		double nationalInsuranceZeroBand = 7592;
+		double topBand = 42484;
+		if(salary > nationalInsuranceZeroBand)
+		{
+			
+			if(salary > topBand)
+			{
+				double firstBand = ((topBand - nationalInsuranceZeroBand) * 0.12);
+				double secondBand = ((salary - topBand) * 0.02);
+				nationalInscurance = firstBand + secondBand;
+			}
+			else
+			{
+				nationalInscurance = (salary-nationalInsuranceZeroBand) * 0.12;
+				
+			}
+		}
+		
+		 		
+		return salary - (incomeTax + nationalInscurance);
+	}
 }
